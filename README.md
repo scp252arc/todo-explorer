@@ -1,71 +1,69 @@
-# todo-explorer README
+# TODO Explorer
 
-This is the README for your extension "todo-explorer". After writing up a brief description, we recommend including the following sections.
+**TODO Explorer** — расширение для Visual Studio Code, позволяющее находить комментарии `TODO` и `FIXME` в исходном коде проекта и быстро переходить к ним.
 
-## Features
+## Возможности
 
-Describe specific features of your extension including screenshots of your extension in action. Image paths are relative to this README file.
+- Поиск `TODO` и `FIXME` в файлах проекта.
+- Отображение задач в боковой панели с группировкой по файлам.
+- Переход к нужной строке по нажатию.
+- Индикатор прогресса сканирования.
+- Автоматическое обновление при сохранении и удалении файлов.
+- Сообщения об отсутствии найденных задач.
 
-For example if there is an image subfolder under your extension project workspace:
+## Пример использования
 
-\!\[feature X\]\(images/feature-x.png\)
+```cpp
+// TODO: реализовать деление
+int divide(int a, int b);
 
-> Tip: Many popular extensions utilize animations. This is an excellent way to show off your extension! We recommend short, focused animations that are easy to follow.
+// FIXME: обработать деление на ноль
+```
 
-## Requirements
+После сканирования комментарии появятся в панели **TODO Explorer**. Нажатие на задачу откроет соответствующую строку кода.
 
-If you have any requirements or dependencies, add a section describing those and how to install and configure them.
+## Установка
 
-## Extension Settings
+### Из готового расширения
 
-Include if your extension adds any VS Code settings through the `contributes.configuration` extension point.
+1. Скачайте `.vsix` из GitHub Releases (если опубликован).
+2. Откройте VS Code → Extensions (`Ctrl + Shift + X`).
+3. В меню `...` выберите **Install from VSIX...** и укажите скачанный файл.
 
-For example:
+### Сборка из исходников
 
-This extension contributes the following settings:
+Необходимы Node.js и npm.
 
-* `myExtension.enable`: Enable/disable this extension.
-* `myExtension.thing`: Set to `blah` to do something.
+```bash
+npm install
+npm run compile
+npx @vscode/vsce package
+```
 
-## Known Issues
+Полученный `.vsix` установите через **Install from VSIX...**.
 
-Calling out known issues can help limit users opening duplicate issues against your extension.
+## Запуск для разработки
 
-## Release Notes
+1. Откройте проект в VS Code.
+2. Выполните `npm install` и `npm run compile`.
+3. Нажмите `F5` для запуска Extension Development Host.
+4. Откройте тестовый проект и выберите **TODO Explorer → Сканировать проект**.
 
-Users appreciate release notes as you update your extension.
+## Ограничения
 
-### 1.0.0
+- Поиск выполняется только в открытой рабочей области.
+- Служебные каталоги (`node_modules`, `.git`, `build` и другие) и файлы больше 1 МиБ пропускаются.
+- Поиск основан на регулярных выражениях, поэтому возможны ложные совпадения.
+- Полное сканирование запускается вручную; при сохранении обновляется только изменённый файл.
 
-Initial release of ...
+## Документация
 
-### 1.0.1
+- [Архитектура и блок-схемы](docs/architecture.md)
+- [API-документация](docs/api/index.html) — генерируется с помощью TypeDoc.
 
-Fixed issue #.
+Для генерации API-документации:
 
-### 1.1.0
-
-Added features X, Y, and Z.
-
----
-
-## Following extension guidelines
-
-Ensure that you've read through the extensions guidelines and follow the best practices for creating your extension.
-
-* [Extension Guidelines](https://code.visualstudio.com/api/references/extension-guidelines)
-
-## Working with Markdown
-
-You can author your README using Visual Studio Code. Here are some useful editor keyboard shortcuts:
-
-* Split the editor (`Cmd+\` on macOS or `Ctrl+\` on Windows and Linux).
-* Toggle preview (`Shift+Cmd+V` on macOS or `Shift+Ctrl+V` on Windows and Linux).
-* Press `Ctrl+Space` (Windows, Linux, macOS) to see a list of Markdown snippets.
-
-## For more information
-
-* [Visual Studio Code's Markdown Support](http://code.visualstudio.com/docs/languages/markdown)
-* [Markdown Syntax Reference](https://help.github.com/articles/markdown-basics/)
-
-**Enjoy!**
+```bash
+npm run docs
+python3 -m http.server 8000 --directory docs/api
+```
