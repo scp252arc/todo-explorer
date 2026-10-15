@@ -1,0 +1,8 @@
+{
+    "$schema": "https://typedoc.org/schema.json",
+    "name": "TODO Explorer",
+    "entryPoints": ["src/extension.ts"],
+    "out": "docs/api",
+    "readme": "README.md",
+    "excludePrivate": false
+}

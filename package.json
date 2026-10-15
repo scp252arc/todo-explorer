@@ -14,10 +14,51 @@
   "contributes": {
     "commands": [
       {
-        "command": "todo-explorer.helloWorld",
-        "title": "Hello World"
+        "command": "todo-explorer.refresh",
+        "title": "Сканировать проект",
+        "category": "TODO Explorer",
+        "icon": "$(search)"
       }
-    ]
+    ],
+    "viewsContainers": {
+      "activitybar": [
+        {
+          "id": "todoExplorer",
+          "title": "TODO Explorer",
+          "icon": "resources/todo.svg"
+        }
+      ]
+    },
+    "viewsWelcome": [
+      {
+        "view": "todoExplorer.tasks",
+        "contents": "Проект ещё не сканировался.\n[Сканировать проект](command:todo-explorer.refresh)",
+        "when": "todoExplorer.scanState == unscanned"
+      },
+      {
+        "view": "todoExplorer.tasks",
+        "contents": "В проекте не найдено комментариев TODO или FIXME.\n[Сканировать снова](command:todo-explorer.refresh)",
+        "when": "todoExplorer.scanState == empty"
+      }
+    ],
+    "views": {
+      "todoExplorer": [
+        {
+          "id": "todoExplorer.tasks",
+          "name": "Tasks",
+          "icon": "resources/todo.svg"
+        }
+      ]
+    },
+    "menus": {
+      "view/title": [
+        {
+          "command": "todo-explorer.refresh",
+          "when": "view == todoExplorer.tasks",
+          "group": "navigation"
+        }
+      ]
+    }
   },
   "scripts": {
     "vscode:prepublish": "npm run compile",
@@ -25,17 +66,19 @@
     "watch": "tsc -watch -p ./",
     "pretest": "npm run compile && npm run lint",
     "lint": "eslint src",
-    "test": "vscode-test"
+    "test": "vscode-test",
+    "docs": "typedoc"
   },
   "devDependencies": {
-    "@types/vscode": "^1.140.0",
     "@types/mocha": "^10.0.10",
     "@types/node": "24.x",
-    "typescript-eslint": "^8.61.1",
-    "eslint": "^10.5.0",
-    "typescript": "^6.0.3",
+    "@types/vscode": "^1.140.0",
     "@vscode/test-cli": "^0.0.15",
-    "@vscode/test-electron": "^3.0.0"
+    "@vscode/test-electron": "^3.0.0",
+    "eslint": "^10.5.0",
+    "typedoc": "^0.28.20",
+    "typescript": "^6.0.3",
+    "typescript-eslint": "^8.61.1"
   },
   "overrides": {
     "diff": "^8.0.4",
